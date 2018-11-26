@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Session;
 use App\AsignacionAlumnosNotas;
 use App\Asignaciones;
 use App\Alumnos;
+use App\Docentes;
 use asignacionAlumnosNotas1\http\Request\AsignacionesRequest;
 
 class AsignacionAlumnosNotasController extends Controller
@@ -20,9 +21,10 @@ class AsignacionAlumnosNotasController extends Controller
         $asignaciones = Asignaciones::all();
         $alumnos = Alumnos::all();
         $nombre =$request->get('nombre');
-
+        $asignacion_alumnos = \Auth::user()->docente->asignacion->AsignacionesAlumnos;
         $asignacionAlumnosNotas = AsignacionAlumnosNotas::orderBy('id','ASC')->nombre($nombre)->paginate(10);
-        return view('asignacionAlumnosNotas.index',compact('asignacionAlumnosNotas','asignaciones','alumnos','materia'));
+        $docentes= Docentes::all();
+        return view('asignacionAlumnosNotas.index',compact('asignacionAlumnosNotas','asignaciones','alumnos','asignacion_alumnos','docentes'));
     }
 
     /**
@@ -94,6 +96,14 @@ class AsignacionAlumnosNotasController extends Controller
           ]);
         AsignacionAlumnosNotas::find($id)->update($request->all());
         return redirect()->route('asignacionAlumnosNotas.index')->with('success','Asignacion actualizada con exito');
+    }
+
+    public function alumnosGrado($id)
+    {
+      AsignacionAlumnosNotas::all();
+      $asignacion_alumnos = \Auth::user()->docente->asignacion->AsignacionesAlumnos;
+
+      return view('asignacionAlumnosNotas.index',compact('nota','id','integradora','cotidiana','asignacion_alumnos'));
     }
 
     /**

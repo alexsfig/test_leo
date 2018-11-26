@@ -10,6 +10,23 @@
       </div>
     </div>
   </div>
+  <form class="select_grado">
+  <h5>Seleccione la Materia a Ingresar Notas</h5>
+  <select name="id_grado" id='id_grado' class="form-control">
+    <option disabled selected>Seleccione la materia
+    </option>
+    @foreach($materias as $asigAlumno)
+    <option value="{{$asigAlumno->id}}">{{$asigAlumno->nombre}}
+    </option>
+    @endforeach
+  </select>
+<br>
+<button class="btn btn-success btn-lg" type="submit" name="button">Ingresar Notas por Materia
+</button>
+</form>
+<br>
+<H4>Seleccione una Materia para consultar las Notas de los Alumnos</H4>
+<br>
   <div>
     <ul class="nav nav-tabs" role="tablist">
       @php($indice = 0)
@@ -113,21 +130,7 @@
       @endforeach
     </div>
 </div>
-<form class="select_grado">
-  Selecione grado
-  <select name="id_grado" id='id_grado' class="form-control">
-    <option disabled selected>Seleccione la materia
-    </option>
-    @foreach($materias as $asigAlumno)
-    <option value="{{$asigAlumno->id}}">{{$asigAlumno->nombre}}
-    </option>
-    @endforeach
-  </select>
-  </div>
-<br>
-<button class="btn btn-success btn-lg" type="submit" name="button">Notas por materia
-</button>
-</form>
+</div>
 @if ($message = Session::get('success'))
 <div class="alert alert-success">
   <p>{{ $message }}

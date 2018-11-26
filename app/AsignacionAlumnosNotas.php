@@ -33,4 +33,10 @@ class AsignacionAlumnosNotas extends Model
     return $this->hasMany('App\AsignacionNotas', 'id_asignacion_alumno');
   }
 
+  public function Docentes(){
+    return $this->hasMany('App\Docentes', 'id_docente');
+  }
+
+  
+
 }

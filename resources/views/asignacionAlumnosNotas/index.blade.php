@@ -27,17 +27,11 @@
       <br>
 
 
-
-
  <div>
-    <ul class="nav nav-tabs" role="tablist">
-      @php($indice = 0)
-
 
     <div class="tab-content">
-      @php($indice = 0)
       @foreach ($docentes as $id => $docente)
-          <div class="table-responsive ">
+          <div class="table-responsive " name="id_docente" value="{{ $id }}">
     
             <table class="table table-striped" style="text-align:center" >
               <thead>
@@ -50,7 +44,7 @@
                 </tr>
               </thead>
               <tbody>
-                @foreach ($$asignacionAlumnosNotas as $key => $asignacion_alumnoNotas)
+                @foreach ($asignacion_alumnos as $key => $asignacion_alumno)
                 <tr>
                   <td>
                     {{ $key+1 }}
@@ -58,16 +52,28 @@
                   <td>
                     <input  required type="hidden" name="notas[asignacion][{{ $key  }}][id_docente]" value="{{ $docente->id }}">
                     <input  required type="hidden" name="notas[asignacion][{{ $key  }}][id_docente]" value="{{ $id }}">
-                    @php ($notasAsignada = $asignacion_alumnoNotas->Asignaciones->where('id_docente', $docente->id )->first())
-                    {{ $value->Alumnos->nombres }} {{ $value->Alumnos->apellidos }}
+                    @php ($alumnos_de_grado = $asignacion_alumno->AsignacionNotas->where('id_docente', $id )->first())
+                    {{ $asignacion_alumno->alumno->nombres .' '. $asignacion_alumno->alumno->apellidos  }}
+                  </td>
+                  <td>
+                    {{ $asignacion_alumno->asignaciones->docentes->User->name  }}
+                  </td>
+                  <td>
+                    {{ $asignacion_alumno->asignaciones->Grados->nombre }} {{ $asignacion_alumno->asignaciones->Grados->seccion }}
+                  </td>
+                  <td>
+                  <a class="btn btn-info btn-lg" data-toggle="tooltip" data-placement="top" title="Detalles" 
+                  href="{{route('asignacionAlumnosNotas.show',$asignacion_alumno->id)}}">
+                      <i class="glyphicon glyphicon-list-alt"></i></a>
+                  <a class="btn btn-primary btn-lg" data-toggle="tooltip" data-placement="top" title="Editar" 
+                  href="{{route('asignacionAlumnosNotas.edit',$asignacion_alumno->id)}}">
+                      <i class="glyphicon glyphicon-pencil"></i></a>
                   </td>
                 </tr>
                 @endforeach
               </tbody>
           </table>
         </div>
-
-
       @endforeach
     </div>
 </div>
@@ -103,6 +109,8 @@
     @endforeach
   </table>
   {!!$asignacionAlumnosNotas->render()!!}
+
+
  <div class="text-center">
     <a class="btn btn-primary" href="{{ url('/gestion') }}">Regresar</a>
   </div>

@@ -164,7 +164,7 @@
  jQuery.extend(jQuery.validator.messages, {
     required: "Este campo es requerido",
     max: jQuery.validator.format("Por favor ingrese un valor menor o igual a {0}."),
-    min: jQuery.validator.format("Por favor ingrese un valor mayor o igual a{0}.")
+    min: jQuery.validator.format("Por favor ingrese un valor mayor o igual a {0}.")
 });
 
 </script>
